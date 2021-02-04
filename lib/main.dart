@@ -10,7 +10,8 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      theme: ThemeData(primarySwatch: Colors.blue),
+      theme: ThemeData(primarySwatch: Colors.orange),
+      debugShowCheckedModeBanner: false,
       home: Pomodoro(),
     );
   }
@@ -35,26 +36,19 @@ class Pomodoro extends StatefulWidget {
 }
 
 class _PomodoroState extends State<Pomodoro> with TickerProviderStateMixin {
-  int _timeLeft = 1;
-  int _timeLeftInSec = 1 * 3;
+  int _timeLeft = 25;
+  int _timeLeftInSec = 25 * 60;
   bool _isRunning = false;
   bool _isAtStart = true;
 
   int _breaktimeLeft = 2;
   int _breaktimeLeftInSec = 2*1;
-  String _sessionStatus = "Work!";
+  String _sessionStatus = "Done!";
   int sessionCounter = 0;
-
-  /*
-  void sessionCounterProcess() {
-    if (sessionCounter = 4) {
-
-    }
-  }
-  */
 
   // Animation processing
   AnimationController _controller;
+  Animation _animation;
 
   @override
   void dispose() {
@@ -73,7 +67,7 @@ class _PomodoroState extends State<Pomodoro> with TickerProviderStateMixin {
       if (status == AnimationStatus.completed) {
         _controller.reset();
         sessionCounter++;
-      }
+      };
     });
     super.initState();
   }
@@ -133,7 +127,7 @@ class _PomodoroState extends State<Pomodoro> with TickerProviderStateMixin {
                 setState(() => _isRunning = !_isRunning);
               },
             ),
-            Text("$_sessionStatus",
+            Text("$sessionCounter $_sessionStatus",
               style: TextStyle(
                 color: Color(0xff929da5),
                 fontSize: 20,
